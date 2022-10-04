@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html th:lang="#{lang}" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title th:text="#{gallery.title}">Bardsung Gallery</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<body class="bg-dark text-white">
+<script>
+    $(document).ready(function() {
+        $("img").on('click', function() {
+            let imageURL = $(this).attr('src');
+            let name = imageURL.substring(imageURL.lastIndexOf('-')+1, imageURL.lastIndexOf('.'));
+            let category = $("#category").val();
+            let copyText = "IconDescription.builder() \n\t.icon(\""+imageURL+"\") \n\t.category(Category."+category+") \n\t.name(\""+name+"\") \n\t.build(),\n";
+
+            navigator.clipboard.writeText(copyText);
+        });
+    });
+
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 th:text="#{gallery.headline}"></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center" th:utext="#{gallery.text}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-group w-50 mt-3 mb-3">
+            <label for="category" class="form-label" th:text="#{gallery.category}"></label>
+            <select class="form-select form-select-sm" id="category">
+                <option th:each="c : ${categories}" th:value="${c}"
+                        th:text="${#strings.capitalize(#strings.toLowerCase(c))}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="row pb-2">
+        <div class="col-1 text-center" th:each="i : ${images}">
+            <div>
+                <img th:src="${i.url}" th:width="${img.width}" th:height="${img.height}"/>
+                <div class="fw-light" th:text="${i.name}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

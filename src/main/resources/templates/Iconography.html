@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html th:lang="#{lang}" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title th:text="#{iconography.title}">Bardsung Iconography</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<body class="bg-dark text-white">
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 th:text="#{iconography.headline}"></h1>
+        </div>
+    </div>
+    <div class="row pb-2" th:each="r: ${rows}">
+        <div class="col-12 text-center" th:if="${r.isHeader}">
+            <h2 th:text="#{${r.headerKey}}"></h2>
+            <span th:text="#{${r.headerDescriptionKey}}" class="fw-light"></span>
+        </div>
+        <th:block th:unless="${r.isHeader}">
+            <div class="col-1 text-center">
+                <img th:src="${r.left.icon}" th:width="${img.width}" th:height="${img.height}"/>
+            </div>
+            <div class="col-4">
+                <span class="fw-bold" th:text="#{${r.left.nameKey}}"></span>
+                <span th:text="#{${r.left.descriptionKey}}" class="fw-light"></span>
+            </div>
+            <div class="col-2"></div>
+            <th:block th:if="${r.right != null}">
+                <div class="col-1 text-center">
+                    <img th:src="${r.right.icon}" th:width="${img.width}" th:height="${img.height}"/>
+                </div>
+                <div class="col-4">
+                    <span class="fw-bold" th:text="#{${r.right.nameKey}}"></span>
+                    <span th:text="#{${r.right.descriptionKey}}" class="fw-light"></span>
+                </div>
+            </th:block>
+            <div class="col-5" th:if="${r.right == null}"></div>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>
