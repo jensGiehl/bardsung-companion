@@ -35,6 +35,7 @@ public class ImageWebController {
                 .flatMap(d -> d.getData().stream())
                 .sorted(Comparator.comparing(IconDescription::getCategory).thenComparing(IconDescription::getName))
                 .map(IconDescription::getIcon)
+                .filter(icon -> icon.toLowerCase().startsWith("http"))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
