@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="de">
+
+<html th:lang="#{lang}" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="fragments::header (title=#{images.title})"></header>
+<body>
+<ul>
+    <li th:each="i : ${images}">
+        <a th:href="${i}" th:text="${i}"></a>
+    </li>
+</ul>
+</body>
+</html>

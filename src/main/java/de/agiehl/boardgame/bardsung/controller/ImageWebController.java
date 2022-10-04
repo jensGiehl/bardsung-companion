@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @AllArgsConstructor
@@ -28,15 +29,27 @@ public class ImageWebController {
 
     private List<BardsungData> dataProvider;
 
-    @GetMapping(path = "/images", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(path = "/images", produces = MediaType.TEXT_PLAIN_VALUE, consumes = MediaType.TEXT_PLAIN_VALUE)
     public @ResponseBody
     String getImageUrls() {
+        return getUsedImages()
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    private Stream<String> getUsedImages() {
         return dataProvider.stream()
                 .flatMap(d -> d.getData().stream())
                 .sorted(Comparator.comparing(IconDescription::getCategory).thenComparing(IconDescription::getName))
                 .map(IconDescription::getIcon)
-                .filter(icon -> icon.toLowerCase().startsWith("http"))
-                .collect(Collectors.joining(System.lineSeparator()));
+                .filter(icon -> icon.toLowerCase().startsWith("http"));
+    }
+
+    @GetMapping(path = "/images")
+    public String getImagesAsHtml(Model model) {
+        List<String> usedImages = getUsedImages().toList();
+        model.addAttribute("images", usedImages);
+
+        return "images";
     }
 
     @GetMapping(path = "/gallery/unused")
