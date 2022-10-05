@@ -37,7 +37,13 @@ public class TreasureData implements BardsungData {
                         .icon("https://cardcreator.steamforged.com/icons/bardsungHero/BS-Icons-Gold-Treasure.png")
                         .category(Category.TREASURE)
                         .name("Gemstones")
+                        .build(),
+                IconDescription.builder()
+                        .icon("https://cardcreator.steamforged.com/icons/bardsungHero/BS-Icons-Gold-OneUse.png")
+                        .category(Category.TREASURE)
+                        .name("OneUse")
                         .build()
+
 
         );
     }
