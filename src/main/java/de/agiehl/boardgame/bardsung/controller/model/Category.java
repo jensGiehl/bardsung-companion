@@ -13,5 +13,6 @@ public enum Category {
     ASPECT,
     TOKEN,
     TREASURE,
-    CONSUMABLES
+    CONSUMABLES,
+    DUNGEON_CARD
 }
